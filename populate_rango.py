@@ -8,8 +8,8 @@ from rango.models import Category, Page
 def populate():
     
     python_pages = [
-        {'title': 'Official Python Tutorial',
-    'url':'http://docs.python.org/3/tutorial/','views':44},
+    {'title': 'Official Python Tutorial',
+     'url':'http://docs.python.org/3/tutorial/','views':4},
     {'title':'How to Think like a Computer Scientist',
     'url':'http://www.greenteapress.com/thinkpython/','views':62},
     {'title':'Learn Python in 10 Minutes',
@@ -38,7 +38,7 @@ def populate():
     for cat, cat_data in cats.items():
         c = add_cat(cat,cat_data['views'],cat_data['likes'])
         for p in cat_data['pages']:
-            add_page(c,p['title'],p['url'])
+            add_page(c,p['title'],p['url'],p['views'])
     
     for c in Category.objects.all():
         for p in Page.objects.filter(category=c):
