@@ -110,8 +110,8 @@ def register(request):
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
-            
-        return render(request,'rango/register.html',context={'user_form':user_form,'profile_form':profile_form,'registered':registered})
+        
+    return render(request,'rango/register.html',context={'user_form':user_form,'profile_form':profile_form,'registered':registered})
     
 def user_login(request):
     if request.method=="POST":
@@ -125,9 +125,9 @@ def user_login(request):
                 login(request,user)
                 return redirect(reverse('rango:index'))
             else:
-                return HTTPResponse("Your rango account is disabled.")
+                return HttpResponse("Your rango account is disabled.")
         else:
-            print(f"Invalid login details: {username}, {password}")
+            print("Invalid login details: {username}, {password}")
             return HttpResponse("Invalid login details supplied.")
     else:
-        return render(request, 'rango/login.html')
+        return render(request,'rango/login.html')
