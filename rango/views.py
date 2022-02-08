@@ -6,6 +6,7 @@ from rango.forms import CategoryForm
 from django.shortcuts import redirect
 from django.urls import reverse
 from rango.forms import UserForm, UserProfileForm
+from django.contrib.auth import authenticate, login
 from rango.forms import PageForm
 
 def index(request):
@@ -111,3 +112,22 @@ def register(request):
         profile_form = UserProfileForm()
             
         return render(request,'rango/register.html',context={'user_form':user_form,'profile_form':profile_form,'registered':registered})
+    
+def user_login(request):
+    if request.method=="POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        
+        user = authenticate(username=username,password=password)
+        
+        if user:
+            if user.is_active:
+                login(request,user)
+                return redirect(reverse('rango:index'))
+            else:
+                return HTTPResponse("Your rango account is disabled.")
+        else:
+            print(f"Invalid login details: {username}, {password}")
+            return HttpResponse("Invalid login details supplied.")
+    else:
+        return render(request, 'rango/login.html')
